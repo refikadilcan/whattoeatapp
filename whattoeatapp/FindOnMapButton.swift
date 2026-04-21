@@ -34,7 +34,7 @@ struct FindOnMapButton: View {
     }
 
     private func openAppleMaps() {
-        let query = "\(foodName) "
+        let query = "\(foodName) near me"
             .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? foodName
         if let url = URL(string: "maps://?q=\(query)") {
             UIApplication.shared.open(url)
@@ -42,9 +42,8 @@ struct FindOnMapButton: View {
     }
 
     private func openGoogleMaps() {
-        let query = "\(foodName) "
+        let query = "\(foodName) near me"
             .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? foodName
-        // Google Maps uygulaması yüklüyse onu aç, değilse web'de aç
         let googleMapsApp = URL(string: "comgooglemaps://?q=\(query)")
         let googleMapsWeb = URL(string: "https://www.google.com/maps/search/\(query)")
 
