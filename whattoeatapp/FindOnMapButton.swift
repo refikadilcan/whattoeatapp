@@ -3,7 +3,6 @@ import SwiftUI
 
 struct FindOnMapButton: View {
     let foodName: String
-    @State private var showingMapOptions = false
     @State private var isLocating = false
     @StateObject private var locationManager = LocationManager()
 
@@ -33,33 +32,7 @@ struct FindOnMapButton: View {
         .onChange(of: locationManager.locationReady) { ready in
             if ready && isLocating {
                 isLocating = false
-                showingMapOptions = true
-            }
-        }
-        .confirmationDialog(
-            "Open With",
-            isPresented: $showingMapOptions
-        ) {
-            Button("Apple Maps") {
-                openAppleMaps()
-            }
-            Button("Google Maps") {
                 openGoogleMaps()
-            }
-        }
-    }
-
-    private func openAppleMaps() {
-        let query = foodName
-            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? foodName
-
-        if let coord = locationManager.location?.coordinate {
-            if let url = URL(string: "maps://?q=\(query)&sll=\(coord.latitude),\(coord.longitude)&z=14") {
-                UIApplication.shared.open(url)
-            }
-        } else {
-            if let url = URL(string: "maps://?q=\(query)%20near%20me") {
-                UIApplication.shared.open(url)
             }
         }
     }
